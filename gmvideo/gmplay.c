@@ -58,7 +58,8 @@ u32 fc=0; // frame counter
 void gmplay4(void) {
     u32 i,x,y,b,p,off=(MY/2-400)*fs+MX/4-150,fbsize=FBSIZE; u8 fbt[FBSIZE];
     while (fread(fbt,fbsize,1,stdin)) { teu+=130; // teu: next update time
-        if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
+        // ffmpeg will keep timing correct, need to remove chance of lag
+        // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
         gmlib(GMLIB_VSYNC); // wait for fb0 ready
         for (y=0;y<800;y++) for (x=0;x<600;x+=8) {
             b=fbt[600/8*y+x/8]; i=y*fs+x/2+off;
@@ -75,7 +76,8 @@ void gmplay4(void) {
 void gmplay8(void) {
     u32 i,x,y,b,fbsize=FBSIZE; u8 fbt[FBSIZE];
     while (fread(fbt,fbsize,1,stdin)) { teu+=130; // teu: next update time
-        if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
+        // ffmpeg will keep timing correct, need to remove chance of lag
+        // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
         gmlib(GMLIB_VSYNC); // wait for fb0 ready
         for (y=0;y<800;y++) for (x=0;x<600;x+=8) {
             b=fbt[600/8*y+x/8]; i=y*fs+x;
@@ -111,7 +113,8 @@ int gmlib(int op) {
     } else if (GMLIB_UPDATE==op) {
         if (ioctl(fdFB,eupcode,eupdata)<0) system("eips ''");  // 5.1.0 fallback
     } else if (GMLIB_VSYNC==op) { while (teu>getmsec()) usleep(1000); // fb0 busy
-    } else if (GMLIB_CLOSE==op) { gmlib(GMLIB_UPDATE); sleep(1); // last screen
+	// ffmpeg will keep timing correct, need to remove chance of lag	
+    } else if (GMLIB_CLOSE==op) { gmlib(GMLIB_UPDATE);
         system("eips -f -c;eips -c"); munmap(fb0,MY*fs); close(fdFB);
     } else { return -1; }
     return 0;

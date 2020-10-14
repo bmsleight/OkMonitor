@@ -14,4 +14,12 @@ geekmaster's video player accepts raw video piped into STDIN.
 geekmaster's simple, efficient and elegant video transcoder that takes 800x600 grayscale raw video piped from ffmpeg (or any other source of raw video), then does rotate right, "no dither table" ordered dither, and 8-pixel-per-byte packing.
 [First version](https://www.mobileread.com/forums/showpost.php?p=2074379&postcount=60)
 
+## Compile
+
+Cna be compiled on a Raspberry PI, as same chip set, but libraries are not exectly same - but littel libraries used
+[Ben log](https://a.bramble.ninja/cross-compiling-c-for-armv7-kindle-5-touch) gives a hint.
+
+
+`gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay.c`
+
 
