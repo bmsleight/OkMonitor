@@ -51,7 +51,7 @@ u32 MY=0;    // yres (visible)
 u32 VY=0;   // (VY>MY): mxcfb driver
 u8 ppb=0;  // pixels per byte
 u32 fc=0; // frame counter
-#define FBSIZE (600/8*800)
+#define FBSIZE (758/8*1024)
 //==================================
 // gmplay4 - play video on 4-bit fb0
 //----------------------------------
@@ -61,8 +61,8 @@ void gmplay4(void) {
         // ffmpeg will keep timing correct, need to remove chance of lag
         // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
         gmlib(GMLIB_VSYNC); // wait for fb0 ready
-        for (y=0;y<800;y++) for (x=0;x<600;x+=8) {
-            b=fbt[600/8*y+x/8]; i=y*fs+x/2+off;
+        for (y=0;y<1024;y++) for (x=0;x<758;x+=8) {
+            b=fbt[758/8*y+x/8]; i=y*fs+x/2+off;
             p=(b&1)*240; b>>=1; fb0[i]=p|(b&1)*15; b>>=1;
             p=(b&1)*240; b>>=1; fb0[i+1]=p|(b&1)*15; b>>=1;
             p=(b&1)*240; b>>=1; fb0[i+2]=p|(b&1)*15; b>>=1;
@@ -79,8 +79,8 @@ void gmplay8(void) {
         // ffmpeg will keep timing correct, need to remove chance of lag
         // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
         gmlib(GMLIB_VSYNC); // wait for fb0 ready
-        for (y=0;y<800;y++) for (x=0;x<600;x+=8) {
-            b=fbt[600/8*y+x/8]; i=y*fs+x;
+        for (y=0;y<1024;y++) for (x=0;x<758;x+=8) {
+            b=fbt[758/8*y+x/8]; i=y*fs+x;
             fb0[i]=(b&1)*255; b>>=1; fb0[i+1]=(b&1)*255; b>>=1;
             fb0[i+2]=(b&1)*255; b>>=1; fb0[i+3]=(b&1)*255; b>>=1;
             fb0[i+4]=(b&1)*255; b>>=1; fb0[i+5]=(b&1)*255; b>>=1;
@@ -93,11 +93,11 @@ void gmplay8(void) {
 // op (init, update, vsync, close)
 //------------------------------------
 int gmlib(int op) {
-    static struct update_area_t ua={0,0,600,800,21,NULL};
+    static struct update_area_t ua={0,0,758,1024,21,NULL};
     static struct mxcfb_update_data ur={
-        {0,0,600,800},257,0,1,0x1001,0,{0,0,0,{0,0,0,0}}};
+        {0,0,758,1024},257,0,1,0x1001,0,{0,0,0,{0,0,0,0}}};
     static struct mxcfb_update_data51 ur51={
-        {0,0,600,800},257,0,1,0,0,0x1001,0,{0,0,0,{0,0,0,0}}};
+        {0,0,758,1024},257,0,1,0,0,0x1001,0,{0,0,0,{0,0,0,0}}};
     static int eupcode; static void *eupdata=NULL;
     struct fb_var_screeninfo screeninfo;
     if (GMLIB_INIT==op) { teu=getmsec(); fdFB=open("/dev/fb0",O_RDWR);
