@@ -24,6 +24,6 @@ Can be compiled on a Raspberry PI, as same chip set, but libraries are not exect
 
 Whereas raw2gmv is run on the pi so 
 
-`gcc -Wl raw2gmv -o raw2gmv`
+`gcc raw2gmv.c -o raw2gmv`
 
 
