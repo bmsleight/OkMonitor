@@ -74,7 +74,6 @@ void gmplay4(void) {
   u32 i, x, y, b, p, off = (MY / 2 - 400) * fs + MX / 4 - 150, fbsize = FBSIZE;
   u8 fbt[FBSIZE];
   while (fread(fbt, fbsize, 1, stdin)) {
-    teu += 130; // teu: next update time
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
@@ -99,6 +98,7 @@ void gmplay4(void) {
         fb0[i + 3] = p | (b & 1) * 15;
       }
     fc++;
+    teu += 130; // teu: next update time
     gmlib(GMLIB_UPDATE);
   }
 }
@@ -109,7 +109,6 @@ void gmplay8(void) {
   u32 i, x, y, b, fbsize = FBSIZE;
   u8 fbt[FBSIZE];
   while (fread(fbt, fbsize, 1, stdin)) {
-    teu += 130; // teu: next update time
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
@@ -134,6 +133,7 @@ void gmplay8(void) {
         fb0[i + 7] = (b & 1) * 255;
       }
     fc++;
+    teu += 130; // teu: next update time
     gmlib(GMLIB_UPDATE);
   }
 }
