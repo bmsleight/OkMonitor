@@ -16,10 +16,14 @@ geekmaster's simple, efficient and elegant video transcoder that takes 800x600 g
 
 ## Compile
 
-Cna be compiled on a Raspberry PI, as same chip set, but libraries are not exectly same - but littel libraries used
+Can be compiled on a Raspberry PI, as same chip set, but libraries are not exectly same - but littel libraries used
 [Ben log](https://a.bramble.ninja/cross-compiling-c-for-armv7-kindle-5-touch) gives a hint.
 
 
-`gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay.c`
+`gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay.c -o gmplay`
+
+Whereas raw2gmv is run on the pi so 
+
+`gcc -Wl raw2gmv -o raw2gmv`
 
 
