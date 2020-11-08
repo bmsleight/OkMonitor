@@ -25,6 +25,11 @@ u32 __invalid_size_argument_for_IOC; // ioctl.h bug fix for tcc
 #define EU3 0x46dd
 #define EU50 0x4040462e
 #define EU51 0x4048462e
+// Size
+#define XVID 758
+#define YVID 1024
+#define FBSIZE (758 / 8 * 1024)
+
 struct update_area_t {
   int x1, y1, x2, y2, which_fx;
   u8 *buffer;
@@ -67,42 +72,7 @@ u32 MY = 0;     // yres (visible)
 u32 VY = 0;     // (VY>MY): mxcfb driver
 u8 ppb = 0;     // pixels per byte
 u32 fc = 0;     // frame counter
-#define FBSIZE (758 / 8 * 1024)
-//==================================
-// gmplay4 - play video on 4-bit fb0
-//----------------------------------
-void gmplay4(void) {
-  u32 i, x, y, b, p, off = (MY / 2 - 400) * fs + MX / 4 - 150, fbsize = FBSIZE;
-  u8 fbt[FBSIZE];
-  while (fread(fbt, fbsize, 1, stdin)) {
-    // ffmpeg will keep timing correct, need to remove chance of lag
-    // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
-    gmlib(GMLIB_VSYNC); // wait for fb0 ready
-    for (y = 0; y < 1024; y++)
-      for (x = 0; x < 758; x += 8) {
-        b = fbt[758 / 8 * y + x / 8];
-        i = y * fs + x / 2 + off;
-        p = (b & 1) * 240;
-        b >>= 1;
-        fb0[i] = p | (b & 1) * 15;
-        b >>= 1;
-        p = (b & 1) * 240;
-        b >>= 1;
-        fb0[i + 1] = p | (b & 1) * 15;
-        b >>= 1;
-        p = (b & 1) * 240;
-        b >>= 1;
-        fb0[i + 2] = p | (b & 1) * 15;
-        b >>= 1;
-        p = (b & 1) * 240;
-        b >>= 1;
-        fb0[i + 3] = p | (b & 1) * 15;
-      }
-    fc++;
-    teu += 130; // teu: next update time
-    gmlib(GMLIB_UPDATE);
-  }
-}
+
 //==================================
 // gmplay8 - play video on 8-bit fb0
 //----------------------------------
@@ -113,9 +83,9 @@ void gmplay8(void) {
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
-    for (y = 0; y < 1024; y++)
-      for (x = 0; x < 758; x += 8) {
-        b = fbt[758 / 8 * y + x / 8];
+    for (y = 0; y < YVID; y++)
+      for (x = 0; x < XVID; x += 8) {
+        b = fbt[XVID / 8 * y + x / 8];
         i = y * fs + x;
         fb0[i] = (b & 1) * 255;
         b >>= 1;
@@ -143,11 +113,11 @@ void gmplay8(void) {
 // op (init, update, vsync, close)
 //------------------------------------
 int gmlib(int op) {
-  static struct update_area_t ua = {0, 0, 758, 1024, 21, NULL};
+  static struct update_area_t ua = {0, 0, XVID, YVID, 21, NULL};
   static struct mxcfb_update_data ur = {
-      {0, 0, 758, 1024}, 257, 0, 1, 0x1001, 0, {0, 0, 0, {0, 0, 0, 0}}};
+      {0, 0, XVID, YVID}, 257, 0, 1, 0x1001, 0, {0, 0, 0, {0, 0, 0, 0}}};
   static struct mxcfb_update_data51 ur51 = {
-      {0, 0, 758, 1024}, 257, 0, 1, 0, 0, 0x1001, 0, {0, 0, 0, {0, 0, 0, 0}}};
+      {0, 0, XVID, YVID}, 257, 0, 1, 0, 0, 0x1001, 0, {0, 0, 0, {0, 0, 0, 0}}};
   static int eupcode;
   static void *eupdata = NULL;
   struct fb_var_screeninfo screeninfo;
@@ -217,11 +187,7 @@ int getmsec(void) {
 int main(void) {
   int i;
   gmlib(GMLIB_INIT);
-  if (ppb - 1) {
-    gmplay4();
-  } else {
-    gmplay8();
-  }
+  gmplay8();
   i = getmsec() / 100;
   printf("%d frames in %0.1f secs = %2.1f FPS\n", fc, (double)i / 10.0,
          (double)fc * 10.0 / i);
