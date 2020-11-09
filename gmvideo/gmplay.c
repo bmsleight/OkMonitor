@@ -26,9 +26,15 @@ u32 __invalid_size_argument_for_IOC; // ioctl.h bug fix for tcc
 #define EU50 0x4040462e
 #define EU51 0x4048462e
 // Size
+//#define XVID 379
+//#define YVID 512
+//#define FBSIZE (379 / 8 * 512)
+//
+
 #define XVID 758
 #define YVID 1024
 #define FBSIZE (758 / 8 * 1024)
+#define ZOOMFBSIZE (379 / 8 * 512)
 
 struct update_area_t {
   int x1, y1, x2, y2, which_fx;
@@ -77,15 +83,16 @@ u32 fc = 0;     // frame counter
 // gmplay8 - play video on 8-bit fb0
 //----------------------------------
 void gmplay8(void) {
-  u32 i, x, y, b, fbsize = FBSIZE;
-  u8 fbt[FBSIZE];
+  u32 i, x, y, b, fbsize = ZOOMFBSIZE;
+  u8 fbt[ZOOMFBSIZE];
+  // Read from stadard in - FBSIZE f bytes then write to frame buffer
   while (fread(fbt, fbsize, 1, stdin)) {
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
-    for (y = 0; y < YVID; y++)
+    for (y = 0; y < YVID; y ++)
       for (x = 0; x < XVID; x += 8) {
-        b = fbt[XVID / 8 * y + x / 8];
+        b = fbt[(XVID/2) / 8 * (y/2) + (x/2) / 8];
         i = y * fs + x;
         fb0[i] = (b & 1) * 255;
         b >>= 1;
@@ -187,6 +194,9 @@ int getmsec(void) {
 int main(void) {
   int i;
   gmlib(GMLIB_INIT);
+
+  printf("ppb, fs, VY, MX, MY, %d %d %d %d  \n", ppb, fs, VY, MX, MY);
+
   gmplay8();
   i = getmsec() / 100;
   printf("%d frames in %0.1f secs = %2.1f FPS\n", fc, (double)i / 10.0,
