@@ -90,10 +90,10 @@ void gmplay8(void) {
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
-    for (y = 0; y < YVID; y ++)
-      for (x = 0; x < XVID; x += 8) {
-        b = fbt[(XVID/2) / 8 * (y/2) + (x/2) / 8];
-        i = y * fs + x;
+    for (y = 0; y < YVID/2; y ++)
+      for (x = 0; x < XVID/2; x += 8) {
+        b = fbt[(XVID/2) / 8 * y + x / 8];
+        i = (y*2) * fs + (x*2);
         fb0[i] = (b & 1) * 255;
         b >>= 1;
         fb0[i + 1] = (b & 1) * 255;
