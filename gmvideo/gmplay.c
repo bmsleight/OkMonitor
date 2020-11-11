@@ -90,28 +90,61 @@ void gmplay8(void) {
     // ffmpeg will keep timing correct, need to remove chance of lag
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
-    for (y = 0; y < YVID/2; y ++)
-      for (x = 0; x < XVID/2; x += 8) {
-        b = fbt[(XVID/2) / 8 * y + x / 8];
-        i = (y*2) * fs + (x*2);
+    for (y = 0; y < YVID; y +=2)
+      for (x = 0; x < XVID; x += 16) {
+
+        i = y * fs + x;        
+
+        b = fbt[(XVID/2) / 8 * (y/2) + (x/2) / 8];
         fb0[i] = (b & 1) * 255;
-        b >>= 1;
         fb0[i + 1] = (b & 1) * 255;
+        fb0[i + 0 + fs] = (b & 1) * 255;
+        fb0[i + 1 + fs] = (b & 1) * 255;
+        
         b >>= 1;
         fb0[i + 2] = (b & 1) * 255;
-        b >>= 1;
         fb0[i + 3] = (b & 1) * 255;
+        fb0[i + 2 + fs] = (b & 1) * 255;
+        fb0[i + 3 + fs] = (b & 1) * 255;
+
         b >>= 1;
         fb0[i + 4] = (b & 1) * 255;
-        b >>= 1;
         fb0[i + 5] = (b & 1) * 255;
-        b >>= 1;
+        fb0[i + 4 + fs] = (b & 1) * 255;
+        fb0[i + 5 + fs] = (b & 1) * 255;
+
+        b >>= 1;        
         fb0[i + 6] = (b & 1) * 255;
-        b >>= 1;
         fb0[i + 7] = (b & 1) * 255;
+        fb0[i + 6 + fs] = (b & 1) * 255;
+        fb0[i + 7 + fs] = (b & 1) * 255;
+
+        b >>= 1;
+        fb0[i + 8] = (b & 1) * 255;
+        fb0[i + 9] = (b & 1) * 255;
+        fb0[i + 8 + fs] = (b & 1) * 255;
+        fb0[i + 9 + fs] = (b & 1) * 255;
+
+        b >>= 1;        
+        fb0[i + 10] = (b & 1) * 255;
+        fb0[i + 11] = (b & 1) * 255;
+        fb0[i + 10 + fs] = (b & 1) * 255;
+        fb0[i + 11 + fs] = (b & 1) * 255;
+
+        b >>= 1;        
+        fb0[i + 12] = (b & 1) * 255;
+        fb0[i + 13] = (b & 1) * 255;
+        fb0[i + 12 + fs] = (b & 1) * 255;
+        fb0[i + 13 + fs] = (b & 1) * 255;
+
+        b >>= 1;
+        fb0[i + 14] = (b & 1) * 255;
+        fb0[i + 15] = (b & 1) * 255;
+        fb0[i + 14 + fs] = (b & 1) * 255;
+        fb0[i + 15 + fs] = (b & 1) * 255;
       }
     fc++;
-    teu += 130; // teu: next update time
+//    teu += 130; // teu: next update time
     gmlib(GMLIB_UPDATE);
   }
 }
