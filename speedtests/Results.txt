@@ -1,0 +1,17 @@
+Results Four Screens
+
+PI4 1600x1200, MJPEG, -r 5 -> .52 delay but able to keepup
+PI4 1600x1200, MJPEG, -r 6 -> .44 delay but able to keepup
+PI4 1600x1200, MJPEG, -r 7 -> .8 delay but able to keepup
+PI4 1600x1200, MJPEG, -r 8 -> .4-6 delay but able to keepup
+PI4 1600x1200, MJPEG, -r 10 -> .52 delay but able to keepup (just)
+
+
+-input_format yuyv422
+
+PI4 1024x768, yuyv422, -r 5 -> .52 delay but able to keepup
+
+PI4 1024x768, yuyv422, -r 15 -> .52 delay but able to keepup
+
+
+

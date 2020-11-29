@@ -6,8 +6,8 @@
 #include <stdio.h> // stdin,stdout
 typedef unsigned char u8;
 typedef unsigned int u32;
-#define XVID 758
-#define YVID 1024
+#define XVID 379
+#define YVID 512
 int main(void) {
   u8 o, to, tb, wb0[YVID * XVID];
   u32 x, y, xi, yi, c = 250, b = 120; // c=contrast, b=brightness

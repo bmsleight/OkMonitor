@@ -75,6 +75,7 @@ Connect Kindle as USB storage
 Copy on kindle before enabling USB Networking /mnt/us/usbnet/etc/authorized_keys
 
     cat ~/.ssh/id_rsa.pub >> /media/USERNAME/Kindle/usbnet/etc/authorized_keys
+Nb: Replace USERNAME with your username or mount point. 
 
 Eject Kindle
 
@@ -88,7 +89,7 @@ Then close
 
 HOME ->  Kindle LAUNCHER -> USBNetwork -> SSHD: Use OpenSSH
 USBNetwork -> Allow SSH over Wifi
-USBNetwork -> Enable SSH on boot
+USBNetwork -> Enable SSH at boot
 
 Quit
 
@@ -96,3 +97,26 @@ HOME -> MENU > Settings -> MENU -> Restart
 (Long restart this time)
 
 
+#### 4 Set USB Network
+
+Note usbnetwork only work with Dropbear not OpenSSH!
+
+ssh into kindle and set usb network to 192.168.15.1
+	vi /mnt/us/usbnet/etc/config
+	
+
+	# Tweak this to your liking (IPv4 only, no hostname aliases)
+	KINDLE_IP=10.10.2.2
+	# Will mostly be of use to people needing to plug multiple Kindles on the same computer/network.
+	TWEAK_MAC_ADDRESS="true"
+
+#### 4b Set PI USB Address
+
+	ifconfig usb0 192.168.15.201
+	
+
+NB: USB nework must be toggled off and and on at each reuse. (Interesting gotcha.) Got to give it time to switch off
+
+
+
+ECDSA key fingerprint is SHA256:EnyqIeMglLeBP7sOKfWtHidGBlYL5I6wMy8/6++nbpk

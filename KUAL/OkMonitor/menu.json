@@ -1,0 +1,27 @@
+{
+	"items": [
+	{
+		"name": "Ok Monitor",
+		"priority": -998,
+		"items": [
+		{
+			"name": "Set as OK Monitor 1",
+			"action": "./listerMinion.sh",
+			"params": "1",
+			"internal": "Setting listerMinion.sh 1"
+		},
+		{
+			"name": "Seeting - OK Monitor ",
+			"items": [
+			{
+			"name": "Install OpenWRT ssh Key",
+			"action": "echo hi",
+			"params": "1",
+			"internal": "Setting listerMinion.sh 1"
+			}
+			]
+		}
+		]
+	}
+	]
+}
