@@ -19,7 +19,7 @@ service network restart
 ## Install Packages 
 ```
 opkg update
-opkg install kmod-video-uvc ffmpeg gcc netcat screen
+opkg install kmod-video-uvc ffmpeg gcc netcat screen procps-ng-pkill 
 ```
 
 From dev machine

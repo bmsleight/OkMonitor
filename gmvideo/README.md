@@ -22,8 +22,9 @@ Can be compiled on a Raspberry PI, as same chip set, but libraries are not exect
 
 `gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay.c -o gmplay`
 
-Whereas raw2gmv is run on the pi so 
+Whereas raw2gmv is run on the pi on OpenWRT so 
 
 `gcc raw2gmv.c -o raw2gmv`
+`mv raw2gmv /usr/bin/`
 
 

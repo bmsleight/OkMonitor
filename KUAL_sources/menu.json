@@ -11,13 +11,37 @@
 			"internal": "Setting listerMinion.sh 1"
 		},
 		{
-			"name": "Seeting - OK Monitor ",
+			"name": "Set as OK Monitor 2",
+			"action": "./listerMinion.sh",
+			"params": "2",
+			"internal": "Setting listerMinion.sh 2"
+		},
+		{
+			"name": "Set as OK Monitor 3",
+			"action": "./listerMinion.sh",
+			"params": "3",
+			"internal": "Setting listerMinion.sh 3"
+		},
+		{
+			"name": "Set as OK Monitor 4",
+			"action": "./listerMinion.sh",
+			"params": "4",
+			"internal": "Setting listerMinion.sh 4"
+		},
+		{
+			"name": "Set as OK Monitor - Single Monitor",
+			"action": "echo Not inplimented yet",
+			"params": "n-a",
+			"internal": "Not inplimented yet"
+		},
+		{
+			"name": "Set Up - OK Monitor ",
 			"items": [
 			{
 			"name": "Install OpenWRT ssh Key",
 			"action": "echo hi",
 			"params": "1",
-			"internal": "Setting listerMinion.sh 1"
+			"internal": "Install OpenWRT ssh Key"
 			}
 			]
 		}

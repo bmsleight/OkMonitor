@@ -6,38 +6,38 @@
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor' \
-		-rotate 90 monitor.png 
+		-rotate 270 monitor.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor 1' \
-		-rotate 90 monitor1.png 
+		-rotate 290 monitor1.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor 2' \
-		-rotate 270 monitor2.png 
+		-rotate 90 monitor2.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor 3' \
-		-rotate 90 monitor3.png 
+		-rotate 270 monitor3.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor 3' \
-		-rotate 270 monitor4.png 
+		-rotate 90 monitor4.png 
 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Waiting to connect' \
-		-rotate 90 monitor13_wait.png 
+		-rotate 270 monitor13_wait.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Waiting to connect' \
-		-rotate 270 monitor24_wait.png 
+		-rotate 90 monitor24_wait.png 
 
 
 # To Kindle format

@@ -1,37 +1,29 @@
 #!/usr/bin/env sh
 
-PRIMARY="192.168.1.126"
+PRIMARY="192.168.1.86"
 EXT_LOC=/mnt/us/extensions/OkMonitor/
+WLANIP=$(ifconfig wlan0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
 
-# Switch off screen saver
 lipc-set-prop com.lab126.powerd preventScreenSaver 1
-
-# Display symbol
 eips -g  ${EXT_LOC}info_monitor*$1*wait.png
 
-# Wait until OpenWRT is ready 
-# Connect to 4000 + $1
-# Wait until connection
+NC="nc: can't connect to remote host"
+until [ -z "$NC" ]; do
+    eips -g  ${EXT_LOC}info_monitor*$1*wait.png
+    sleep 2
+    NC=$(echo "$WLANIP"  | nc 192.168.1.86 400$1 2>&1)
+done
 
-#COMMAND="nc $PRIMARY 400$1"
-#until $COMMAND; do 
-#    echo "Nope" >>${EXT_LOC}/1.log
-#    sleep 2
-#done
-
-
-# We are connected to OpenWRT
+# We have sent the IP Address to OpenWRT
 eips -g  ${EXT_LOC}info_monitor$1.png
 
-sleep 2
 
-COMMAND="nc $PRIMARY 500$1"
-
-
-# Connect to ffmpeg via netcat
-$COMMAND | ${EXT_LOC}gmplay 1>${EXT_LOC}/3.log 2>&1
-
-
+# Wait until finished then show checker board
+# Finished is signaled by openWRT - nc -w 6 -l -c -p 600$1
+NC="nc: can't connect to remote host"
+until [ -z "$NC" ]; do
+    sleep 3
+    NC=$(echo "$WLANIP"  | nc 192.168.1.86 600$1 2>&1)
+done
 eips -q 
-
-lipc-set-prop com.lab126.powerd preventScreenSaver 0 
+lipc-set-prop com.lab126.powerd preventScreenSaver 0

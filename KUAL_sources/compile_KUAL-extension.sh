@@ -24,3 +24,5 @@ scp -r ../KUAL/OkMonitor root@192.168.1.97:/mnt/us/extensions/
 #192.168.1.105 = 2
 #192.168.1.106 = 3
 #192.168.1.97 = 4
+
+#cp_OpenWRT.sh

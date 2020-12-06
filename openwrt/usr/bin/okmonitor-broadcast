@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+
+source /etc/config/okmonitor
+
+
+# May need to wait until IP if on non-dedicated
+sleep 20
+# OpenWRT IP
+# https://forum.openwrt.org/t/how-to-get-current-public-ip-address-using-uci/40870/25
+. /lib/functions/network.sh
+network_find_wan NET_IF; 
+network_get_ipaddr NET_ADDR "${NET_IF}"
+#echo "${NET_ADDR}"
+
+rm  /tmp/screen1.pipe
+rm  /tmp/screen2.pipe
+rm  /tmp/screen3.pipe
+rm  /tmp/screen4.pipe
+
+
+mkfifo /tmp/screen1.pipe
+mkfifo /tmp/screen2.pipe
+mkfifo /tmp/screen3.pipe
+mkfifo /tmp/screen4.pipe
+
+cat /tmp/screen1.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5001 &
+cat /tmp/screen2.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5002 &
+cat /tmp/screen3.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5003 &
+cat /tmp/screen4.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5004 &
+
+screen -dmS screen_1 -t screen_1 
+screen -S screen_1 -p screen_1  -X stuff 'while true;  do ssh -y '$IP_1' "lipc-set-prop com.lab126.powerd preventScreenSaver 1; nc '$NET_ADDR' 5001 | /mnt/us/extensions/OkMonitor/gmplay" ; done \r'
+
+screen -dmS screen_2 -t screen_2 
+screen -S screen_2 -p screen_2  -X stuff 'while true;  do ssh -y '$IP_2' "lipc-set-prop com.lab126.powerd preventScreenSaver 1; nc '$NET_ADDR' 5002 | /mnt/us/extensions/OkMonitor/gmplay" ; done \r'
+
+screen -dmS screen_3 -t screen_3 
+screen -S screen_3 -p screen_3  -X stuff 'while true;  do ssh -y '$IP_3' "lipc-set-prop com.lab126.powerd preventScreenSaver 1; nc '$NET_ADDR' 5003 | /mnt/us/extensions/OkMonitor/gmplay" ; done \r'
+
+screen -dmS screen_4 -t screen_4 
+screen -S screen_4 -p screen_4  -X stuff 'while true;  do ssh -y '$IP_4' "lipc-set-prop com.lab126.powerd preventScreenSaver 1; nc '$NET_ADDR' 5004 | /mnt/us/extensions/OkMonitor/gmplay" ; done \r'
+
+sleep 4
+
+
+ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
+	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:0:0,scale=512:379,transpose=2,transpose=2" /tmp/screen1.pipe \
+	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:0,scale=512:379" /tmp/screen2.pipe \
+	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:0:379,scale=512:379,transpose=2,transpose=2" /tmp/screen3.pipe \
+	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379" /tmp/screen4.pipe 2>/tmp/ffmpeg.tmp
+

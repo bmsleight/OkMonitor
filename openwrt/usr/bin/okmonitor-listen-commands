@@ -1,0 +1,91 @@
+#!/usr/bin/env sh
+
+CONF=/etc/config/okmonitor
+source $CONF
+
+function restart_okm_daemon {
+	echo "Re start OkMonitor daemon"
+	/etc/init.d/okmonitor-broadcast  restart
+}
+
+function store_settings {
+	echo NUM_SCREENS=$NUM_SCREENS 	>$CONF
+	echo SETTING_PORT=$SETTING_PORT >>$CONF
+	echo REPLY_PORT=$REPLY_PORT 	>>$CONF
+	echo IP_1=$IP_1					>>$CONF
+	echo IP_2=$IP_2					>>$CONF
+	echo IP_3=$IP_3					>>$CONF
+	echo IP_4=$IP_4					>>$CONF
+#	restart_okm_daemon
+}
+
+function reset_default_value {
+	IP_1=""
+	IP_2=""
+	IP_3=""
+	IP_4=""
+	NUM_SCREENS=4
+	SETTING_PORT=10001
+	REPLY_PORT=10002
+	store_settings
+}
+
+function ssh_key_nc {
+	sleep 2
+	NC=$(cat /root/.ssh/id_rsa.pub  | nc -c $1 $REPLY_PORT 2>&1)
+}
+
+function config_nc {
+	sleep 2
+	NC=$(cat $CONF  | nc -c $1 $REPLY_PORT 2>&1)
+}
+
+
+
+while true
+do
+    sleep 1
+	COMMAND=$(nc -l -p 10001 2>&1)
+	ID="${COMMAND%%=*}"; DATA="${COMMAND#*=}"
+	echo $ID $DATA
+	case "$ID" in
+        restart)
+            restart_okm_daemon
+            ;;
+        reset)
+            reset_default_value
+            ;;
+        sshid)
+            ssh_key_nc $DATA
+            ;;
+        config)
+            config_nc $DATA
+            ;;
+        IP_1)
+            IP_1=$DATA
+            store_settings 
+            ;;
+        IP_2)
+            IP_2=$DATA
+            store_settings 
+            ;;
+        IP_3)
+            IP_3=$DATA
+            store_settings 
+            ;;
+        IP_4)
+            IP_4=$DATA
+            store_settings 
+            ;;
+        NUM_SCREENS)
+            if [ "$DATA" = "4" ] || [ "$DATA" = "1" ]; then
+				NUM_SCREENS=$DATA
+				store_settings
+			fi
+            ;;
+		*)
+            echo "Command not recognised"
+	esac
+done
+
+
