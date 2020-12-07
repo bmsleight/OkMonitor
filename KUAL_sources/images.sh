@@ -11,7 +11,7 @@ convert tv-solid.png -background white \
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
 		-gravity North -pointsize 48 -annotate +0+200 'Monitor 1' \
-		-rotate 290 monitor1.png 
+		-rotate 270 monitor1.png 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
@@ -25,7 +25,7 @@ convert tv-solid.png -background white \
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
-		-gravity North -pointsize 48 -annotate +0+200 'Monitor 3' \
+		-gravity North -pointsize 48 -annotate +0+200 'Monitor 4' \
 		-rotate 90 monitor4.png 
 
 

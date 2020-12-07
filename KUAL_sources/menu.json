@@ -5,28 +5,34 @@
 		"priority": -998,
 		"items": [
 		{
-			"name": "Set as OK Monitor 1",
-			"action": "./listerMinion.sh",
+			"name": "Reset OkMonitor Server",
+			"action": "./set_reset.sh",
 			"params": "1",
-			"internal": "Setting listerMinion.sh 1"
+			"internal": "set_monitor.sh 1"
+		},
+		{
+			"name": "Set as OK Monitor 1",
+			"action": "./set_monitor.sh",
+			"params": "1",
+			"internal": "set_monitor.sh 1"
 		},
 		{
 			"name": "Set as OK Monitor 2",
-			"action": "./listerMinion.sh",
+			"action": "./set_monitor.sh",
 			"params": "2",
-			"internal": "Setting listerMinion.sh 2"
+			"internal": "Setting set_monitor.sh 2"
 		},
 		{
 			"name": "Set as OK Monitor 3",
-			"action": "./listerMinion.sh",
+			"action": "./set_monitor.sh",
 			"params": "3",
-			"internal": "Setting listerMinion.sh 3"
+			"internal": "Setting set_monitor.sh 3"
 		},
 		{
 			"name": "Set as OK Monitor 4",
-			"action": "./listerMinion.sh",
+			"action": "./set_monitor.sh",
 			"params": "4",
-			"internal": "Setting listerMinion.sh 4"
+			"internal": "Setting set_monitor.sh 4"
 		},
 		{
 			"name": "Set as OK Monitor - Single Monitor",
@@ -39,7 +45,7 @@
 			"items": [
 			{
 			"name": "Install OpenWRT ssh Key",
-			"action": "echo hi",
+			"action": "./set_ssh.sh",
 			"params": "1",
 			"internal": "Install OpenWRT ssh Key"
 			}

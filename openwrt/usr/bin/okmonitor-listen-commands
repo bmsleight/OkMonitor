@@ -8,6 +8,7 @@ function restart_okm_daemon {
 	/etc/init.d/okmonitor-broadcast  restart
 }
 
+
 function store_settings {
 	echo NUM_SCREENS=$NUM_SCREENS 	>$CONF
 	echo SETTING_PORT=$SETTING_PORT >>$CONF
@@ -31,16 +32,14 @@ function reset_default_value {
 }
 
 function ssh_key_nc {
-	sleep 2
-	NC=$(cat /root/.ssh/id_rsa.pub  | nc -c $1 $REPLY_PORT 2>&1)
+	CONTENT=$(cat /root/.ssh/id_rsa.pub)
+	echo -e "HTTP/1.1 200 OK\n\n$CONTENT" | nc -c -l -p $REPLY_PORT
 }
 
 function config_nc {
-	sleep 2
-	NC=$(cat $CONF  | nc -c $1 $REPLY_PORT 2>&1)
+	CONTENT=$(cat $CONF)
+	echo -e "HTTP/1.1 200 OK\n\n $CONTENT" | nc -c -l -p $REPLY_PORT
 }
-
-
 
 while true
 do
