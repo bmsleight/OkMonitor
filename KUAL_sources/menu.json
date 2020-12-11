@@ -6,38 +6,44 @@
 		"items": [
 		{
 			"name": "Reset OkMonitor Server",
-			"action": "./set_reset.sh",
-			"params": "1",
+			"action": "./okmonitor-control.sh",
+			"params": "reset",
 			"internal": "set_monitor.sh 1"
 		},
 		{
 			"name": "Set as OK Monitor 1",
-			"action": "./set_monitor.sh",
-			"params": "1",
+			"action": "./okmonitor-control.sh",
+			"params": "monitor 1",
 			"internal": "set_monitor.sh 1"
 		},
 		{
 			"name": "Set as OK Monitor 2",
-			"action": "./set_monitor.sh",
-			"params": "2",
+			"action": "./okmonitor-control.sh",
+			"params": "monitor 2",
 			"internal": "Setting set_monitor.sh 2"
 		},
 		{
 			"name": "Set as OK Monitor 3",
-			"action": "./set_monitor.sh",
-			"params": "3",
+			"action": "./okmonitor-control.sh",
+			"params": "monitor 3",
 			"internal": "Setting set_monitor.sh 3"
 		},
 		{
 			"name": "Set as OK Monitor 4",
-			"action": "./set_monitor.sh",
-			"params": "4",
+			"action": "./okmonitor-control.sh",
+			"params": "monitor 4",
 			"internal": "Setting set_monitor.sh 4"
 		},
 		{
-			"name": "Set as OK Monitor - Single Monitor",
-			"action": "echo Not inplimented yet",
-			"params": "n-a",
+			"name": "Set as OK Monitor - Four Screens",
+			"action": "./okmonitor-control.sh",
+			"params": "number 4",
+			"internal": "Not inplimented yet"
+		},
+		{
+			"name": "Set as OK Monitor - Single Screen",
+			"action": "./okmonitor-control.sh",
+			"params": "number 1",
 			"internal": "Not inplimented yet"
 		},
 		{
@@ -45,8 +51,8 @@
 			"items": [
 			{
 			"name": "Install OpenWRT ssh Key",
-			"action": "./set_ssh.sh",
-			"params": "1",
+			"action": "./okmonitor-control.sh",
+			"params": "sshid",
 			"internal": "Install OpenWRT ssh Key"
 			}
 			]

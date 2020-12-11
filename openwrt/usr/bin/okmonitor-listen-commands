@@ -38,7 +38,7 @@ function ssh_key_nc {
 
 function config_nc {
 	CONTENT=$(cat $CONF)
-	echo -e "HTTP/1.1 200 OK\n\n $CONTENT" | nc -c -l -p $REPLY_PORT
+	echo -e "HTTP/1.1 200 OK\n\n$CONTENT" | nc -c -l -p $REPLY_PORT
 }
 
 while true

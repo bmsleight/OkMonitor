@@ -23,12 +23,12 @@ opkg update
 opkg install kmod-video-uvc ffmpeg gcc netcat screen procps-ng-pkill 
 ```
 
-From dev machine
-`#scp ./gmvideo/raw2gmv.c root@192.168.1.86:./`
-`#scp ./MinionScripts/masterStream.sh root@192.168.1.86:./`
 
 ```
-gcc raw2gmv.c -o raw2gmv
+# From Dev machine
+#ssh root@okmonitor.lan "cd /tmp ; gcc raw2gmv.c -o raw2gmv ; mv raw2gmv /usr/bin/raw2gmv"
+#ssh root@okmonitor.lan "cd /tmp ; gcc raw2gmv2single.c -o raw2gmv2single ; mv raw2gmv2single /usr/bin/raw2gmv2single"
+
 
 mkdir .ssh
 dropbearkey  -t rsa -f .ssh/id_rsa
@@ -37,5 +37,4 @@ dropbearkey -y -f ".ssh/id_rsa" | grep "^ssh-rsa " > ".ssh/id_rsa.pub"
 cat "${KEY_DIR}/id_rsa.pub"
 ```
 
-##  Copy key to each of the kindles
-`#/mnt/us/usbnet/etc/authorized_keys`
+
