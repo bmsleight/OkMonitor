@@ -17,20 +17,17 @@ cp ./gmplay ../KUAL/OkMonitor/
 
 
 # push to test kindle
-ssh root@192.168.1.65 "rm -r /mnt/us/extensions/OkMonitor"
-ssh root@192.168.1.105 "rm -r /mnt/us/extensions/OkMonitor"
-ssh root@192.168.1.106 "rm -r /mnt/us/extensions/OkMonitor"
-ssh root@192.168.1.97 "rm -r /mnt/us/extensions/OkMonitor"
+IP_1="192.168.1.58"
+IP_2="192.168.1.99"
+IP_3="192.168.1.100"
+IP_4="192.168.1.90"
 
-scp -r ../KUAL/OkMonitor root@192.168.1.65:/mnt/us/extensions/
-scp -r ../KUAL/OkMonitor root@192.168.1.105:/mnt/us/extensions/
-scp -r ../KUAL/OkMonitor root@192.168.1.106:/mnt/us/extensions/
-scp -r ../KUAL/OkMonitor root@192.168.1.97:/mnt/us/extensions/
+ssh root@$IP_1 "rm -r /mnt/us/extensions/OkMonitor"
+ssh root@$IP_2 "rm -r /mnt/us/extensions/OkMonitor"
+ssh root@$IP_3 "rm -r /mnt/us/extensions/OkMonitor"
+ssh root@$IP_4 "rm -r /mnt/us/extensions/OkMonitor"
 
-
-#192.168.1.65 = 1
-#192.168.1.105 = 2
-#192.168.1.106 = 3
-#192.168.1.97 = 4
-
-#cp_OpenWRT.sh
+scp -r ../KUAL/OkMonitor root@$IP_1:/mnt/us/extensions/
+scp -r ../KUAL/OkMonitor root@$IP_2:/mnt/us/extensions/
+scp -r ../KUAL/OkMonitor root@$IP_3:/mnt/us/extensions/
+scp -r ../KUAL/OkMonitor root@$IP_4:/mnt/us/extensions/

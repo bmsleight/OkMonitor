@@ -12,6 +12,7 @@ From
 
 ```
 uci set network.lan.proto='dhcp'
+uci set system.@system[0].hostname='okmonitor'
 uci commit 
 service network restart
 ```

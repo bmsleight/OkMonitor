@@ -2,15 +2,15 @@
 
 # Add OpenWRT ssh key to kindle
 
-PRIMARY="192.168.1.86"
+#PRIMARY=$(nslookup okmonitor.lan | tail -n 1 | cut -d\  -f 3)
 EXT_LOC=/mnt/us/extensions/OkMonitor/
 WLANIP=$(ifconfig wlan0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
 
 eips -c
 
-echo "sshid=$WLANIP" | nc $PRIMARY 10001
+echo "sshid=$WLANIP" | nc okmonitor.lan 10001
 sleep 1 
-wget http://192.168.1.86:10002 -O /tmp/sshid 2>/dev/null
+wget http://okmonitor.lan:10002 -O /tmp/sshid 2>/dev/null
 
 SSHID=$(cat /tmp/sshid)
 
