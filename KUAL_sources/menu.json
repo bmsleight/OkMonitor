@@ -38,12 +38,18 @@
 			"name": "Set as OK Monitor - Four Screens",
 			"action": "./okmonitor-control.sh",
 			"params": "number 4",
-			"internal": "Not inplimented yet"
+			"internal": "-"
 		},
 		{
 			"name": "Set as OK Monitor - Single Screen",
 			"action": "./okmonitor-control.sh",
 			"params": "number 1",
+			"internal": "-"
+		},
+		{
+			"name": "Set screensaver off",
+			"action": "./okmonitor-control.sh",
+			"params": "screenoff",
 			"internal": "Not inplimented yet"
 		},
 		{

@@ -53,6 +53,8 @@ set_number() {
 	echo "NUM_SCREENS=$MONITOR" | nc okmonitor.lan 10001
 	sleep 1 
 	fbink -pmhc -y -5 "Set number of monitors as $MONITOR"
+	sleep 2
+	set_reset
 }
 
 get_config() {
@@ -61,6 +63,12 @@ get_config() {
 	wget http://okmonitor.lan:10002 -O /tmp/config 2>/dev/null
 	CONFIG=$(cat /tmp/config)
 	fbink -pmhc -M "$CONFIG"
+}
+
+screenoff() {
+	sleep 2 	
+	fbink -pmhc -M "Screensaver off"
+	lipc-set-prop com.lab126.powerd preventScreenSaver 0
 }
 
 case "$1" in
@@ -78,6 +86,9 @@ case "$1" in
 		;;
 	config)
 		get_config
+		;;
+	screenoff)
+		screenoff
 		;;
 	*)
 		echo "Command not recognised"
