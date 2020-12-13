@@ -1,0 +1,20 @@
+
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option channel '7'
+	option hwmode '11g'
+	option path 'platform/soc/fe300000.mmcnr/mmc_host/mmc1/mmc1:0001/mmc1:0001:1'
+	option htmode 'HT20'
+	option country 'US'
+	option short_gi_40 '0'
+	option legacy_rates '0'
+
+config wifi-iface 'default_radio0'
+	option device 'radio0'
+	option network 'wifi'
+	option mode 'ap'
+	option ssid 'OkMonitor'
+	option encryption 'psk2'
+	option key 'monitor#2'
+
+

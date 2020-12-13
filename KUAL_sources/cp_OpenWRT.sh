@@ -1,9 +1,6 @@
 #!/usr/bin/env sh
 
-# Test OpenWRT 
-#TIP="192.168.1.79"
-
-scp ../openwrt/etc/config/okmonitor  root@okmonitor.lan:/etc/config/
+scp ../openwrt/etc/config/*  root@okmonitor.lan:/etc/config/
 scp ../openwrt/etc/init.d/* root@okmonitor.lan:/etc/init.d/
 scp ../openwrt/usr/bin/* root@okmonitor.lan:/usr/bin/
 scp ../gmvideo/raw2* root@okmonitor.lan:/tmp/
@@ -11,6 +8,7 @@ scp ../gmvideo/raw2* root@okmonitor.lan:/tmp/
 
 #On openwrt
 #/etc/init.d/myservice enable
+# Actually don want to enable - best to let kindle start/stop it. 
 
 ssh root@okmonitor.lan "chmod +x /etc/init.d/okmonitor-listen-commands"
 ssh root@okmonitor.lan "chmod +x /etc/init.d//okmonitor-broadcast"
@@ -20,4 +18,4 @@ ssh root@okmonitor.lan "cd /tmp ; gcc raw2gmv2single.c -o raw2gmv2single ; mv ra
 
 # Tmp config
 
-scp ./tmp-config  root@okmonitor.lan:/etc/config/okmonitor
+#scp ./tmp-config  root@okmonitor.lan:/etc/config/okmonitor
