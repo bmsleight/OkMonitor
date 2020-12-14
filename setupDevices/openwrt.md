@@ -23,24 +23,40 @@ reboot
 opkg update
 opkg install kmod-video-uvc ffmpeg gcc netcat screen procps-ng-pkill unzip
 cd /tmp/
-wget https://raw.githubusercontent.com/bmsleight/OkMonitor/main/gmvideo/raw2gmv.c
-wget https://raw.githubusercontent.com/bmsleight/OkMonitor/main/gmvideo/raw2gmv2single.c
-gcc raw2gmv.c -o raw2gmv ; mv raw2gmv /usr/bin/raw2gmv
+wget https://github.com/bmsleight/OkMonitor/archive/main.zip
+unzip main
+cp -r /tmp/OkMonitor-main/openwrt/*  /
+cd /tmp/OkMonitor-main/gmvideo/
+gcc /tmp/OkMonitor-main/gmvideo/raw2gmv.c -o /usr/bin/raw2gmv
+gcc /tmp/OkMonitor-main/gmvideo/raw2gmv2single.c -o /usr/bin/raw2gmv2single
+/etc/init.d/okmonitor-listen-commands enable
 ```
 
 
 ```
-# From Dev machine
-#ssh root@okmonitor.lan "cd /tmp ; gcc raw2gmv.c -o raw2gmv ; mv raw2gmv /usr/bin/raw2gmv"
-#ssh root@okmonitor.lan "cd /tmp ; gcc raw2gmv2single.c -o raw2gmv2single ; mv raw2gmv2single /usr/bin/raw2gmv2single"
-#/bin/bash ./cp_OpenWRT.sh
-
-
+cd /root/
 mkdir .ssh
 dropbearkey  -t rsa -f .ssh/id_rsa
 cp .ssh/id_rsa .ssh/id_dropbear
 dropbearkey -y -f ".ssh/id_rsa" | grep "^ssh-rsa " > ".ssh/id_rsa.pub"
-cat "${KEY_DIR}/id_rsa.pub"
+cat .ssh//id_rsa.pub
 ```
 
+# Make image
+
+```
+$ sudo fdisk -lu /dev/mmcblk0
+Disk /dev/mmcblk0: 14.9 GiB, 15980298240 bytes, 31211520 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xa9ec6a7b
+
+Device         Boot  Start    End Sectors  Size Id Type
+/dev/mmcblk0p1 *      8192 139263  131072   64M  c W95 FAT32 (LBA)
+/dev/mmcblk0p2      147456 598015  450560  220M 83 Linux
+
+$ sudo dd bs=512 if=/dev/mmcblk0 of=okmonitor2.img count=598015
+```
 

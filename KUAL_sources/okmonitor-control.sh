@@ -71,6 +71,13 @@ screenoff() {
 	lipc-set-prop com.lab126.powerd preventScreenSaver 0
 }
 
+disable() {
+	sleep 2
+	fbink -pmhc -M "Setting WIFI_NO_NET_PROBE"
+	touch /mnt/us/WIFI_NO_NET_PROBE
+	restart wifid
+}
+
 case "$1" in
 	reset)
 		set_reset
@@ -89,6 +96,9 @@ case "$1" in
 		;;
 	screenoff)
 		screenoff
+		;;
+	disable)
+		disable
 		;;
 	*)
 		echo "Command not recognised"

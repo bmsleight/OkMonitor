@@ -56,6 +56,12 @@
 			"name": "Set Up - OK Monitor ",
 			"items": [
 			{
+			"name": "Disable connectivity check",
+			"action": "./okmonitor-control.sh",
+			"params": "disable",
+			"internal": "Disable connectivity check"
+			},
+			{
 			"name": "Install OpenWRT ssh Key",
 			"action": "./okmonitor-control.sh",
 			"params": "sshid",
