@@ -11,11 +11,12 @@ source /etc/config/okmonitor
 NET_ADDR = ""
 while [ -z "$NET_ADDR" ]
 do
-    . /lib/functions/network.sh
-    network_flush_cache
-	network_find_wan NET_IF; 
-	network_get_ipaddr NET_ADDR "${NET_IF}"
-	#echo "${NET_ADDR}"
+    . /lib/functions.sh
+#    network_flush_cache
+#	network_find_wan NET_IF; 
+#	network_get_ipaddr NET_ADDR "${NET_IF}"
+	config_load network
+	config_get NET_ADDR wifi ipaddr
 done
 
 rm  /tmp/screen1.pipe

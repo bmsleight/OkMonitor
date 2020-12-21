@@ -1,10 +1,14 @@
 #!/usr/bin/env sh
 
 # run gmplay depending upon config
+# stop lab126_gui
 
 NUM_SCREENS="$1"
 SERVERIP="$2"
 SERVERPORT="$3"
+
+# Shutdown GUI and allow exit by bottom right-hand
+/bin/ash /mnt/us/extensions/OkMonitor/oktouch-control.sh & 
 
 
 if [ "$NUM_SCREENS" -eq "4" ]

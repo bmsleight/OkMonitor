@@ -120,6 +120,7 @@ void gmplay8(void) {
         fb0[i + 7] = (b & 1) * 255;
       }
     fc++;
+    
 //    teu += 130; // teu: next update time
     gmlib(GMLIB_UPDATE);
   }
@@ -164,18 +165,18 @@ int gmlib(int op) {
       eupcode = EU3;
       eupdata = &ua;
     }
-    system("eips -f -c;eips -c");
+    system("/usr/sbin/eips -f -c;/usr/sbin/eips -c");
     sleep(1);
   } else if (GMLIB_UPDATE == op) {
     if (ioctl(fdFB, eupcode, eupdata) < 0)
-      system("eips ''"); // 5.1.0 fallback
+      system("/usr/sbin/eips ''"); // 5.1.0 fallback
   } else if (GMLIB_VSYNC == op) {
     while (teu > getmsec())
       usleep(1000); // fb0 busy
     // ffmpeg will keep timing correct, need to remove chance of lag
   } else if (GMLIB_CLOSE == op) {
     gmlib(GMLIB_UPDATE);
-    system("eips -f -c;eips -c");
+    system("/usr/sbin/eips -f -c;/usr/sbin/eips -c");
     munmap(fb0, MY * fs);
     close(fdFB);
   } else {

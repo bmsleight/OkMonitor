@@ -31,7 +31,10 @@ set_sshid() {
 		fbink -pmhc -y -5 "SSH Key already installed"
 	else
 		fbink -pmhc -y -5 "Installing SSH Key - a reboot is also needed"
-		cat /tmp/sshid >> /mnt/us/usbnet/etc/authorized_keys
+		cp /mnt/us/usbnet/etc/authorized_keys /tmp/authorized_keys
+		cat /tmp/sshid >> /tmp/authorized_keys
+		# Remove any blank lines 
+		grep -v -e '^$' /tmp/authorized_keys > /mnt/us/usbnet/etc/authorized_keys
 		sleep 2
 		reboot
 	fi
@@ -67,7 +70,7 @@ get_config() {
 
 screenoff() {
 	sleep 2 	
-	fbink -pmhc -M "Screensaver off"
+	fbink -pmhc -M "Screensaver block off"
 	lipc-set-prop com.lab126.powerd preventScreenSaver 0
 }
 

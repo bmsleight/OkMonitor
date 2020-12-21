@@ -47,7 +47,7 @@
 			"internal": "-"
 		},
 		{
-			"name": "Set screensaver off",
+			"name": "Set screensaver block off",
 			"action": "./okmonitor-control.sh",
 			"params": "screenoff",
 			"internal": "Not inplimented yet"
@@ -55,6 +55,12 @@
 		{
 			"name": "Set Up - OK Monitor ",
 			"items": [
+			{
+			"name": "Disable connectivity check",
+			"action": "./okmonitor-control.sh",
+			"params": "disable",
+			"internal": "Disable connectivity check"
+			},
 			{
 			"name": "Install OpenWRT ssh Key",
 			"action": "./okmonitor-control.sh",
