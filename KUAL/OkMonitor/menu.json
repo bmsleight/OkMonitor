@@ -5,7 +5,7 @@
 		"priority": -998,
 		"items": [
 		{
-			"name": "Reset OkMonitor Server",
+			"name": "Restart OkMonitor Server",
 			"action": "./okmonitor-control.sh",
 			"params": "reset",
 			"internal": "set_monitor.sh 1"

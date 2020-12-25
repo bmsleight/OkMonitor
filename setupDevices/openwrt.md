@@ -12,7 +12,6 @@ mmcblk0p2 from 100 MiB from 104 to 208
 
 ```
 uci set network.lan.proto='dhcp'
-
 uci set system.@system[0].hostname='okmonitor'
 uci commit 
 reboot
@@ -22,6 +21,9 @@ reboot
 ```
 opkg update
 opkg install kmod-video-uvc ffmpeg gcc netcat screen procps-ng-pkill unzip
+# Optional USB Networking
+# Hint: No quicker...
+# opkg install kmod-usb-net kmod-usb-net-cdc-ether
 cd /tmp/
 wget https://github.com/bmsleight/OkMonitor/archive/main.zip
 unzip main

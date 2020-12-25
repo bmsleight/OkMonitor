@@ -15,6 +15,6 @@ config wifi-iface 'default_radio0'
 	option mode 'ap'
 	option ssid 'OkMonitor'
 	option encryption 'psk2'
-	option key 'monitor#2'
+	option key 'monitorok'
 
 

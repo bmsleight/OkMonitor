@@ -72,5 +72,5 @@ then
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379" /tmp/screen4.pipe
 else
 	ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
-	-pix_fmt gray -r 3.3 -f rawvideo  -filter:v "scale=1024:758,transpose=2,transpose=2" /tmp/screen1.pipe  1>/tmp/ffmpeg.txt 2>&1
+	-pix_fmt gray -r 3.3 -f rawvideo  -filter:v "scale=1024:758,transpose=2,transpose=2" /tmp/screen1.pipe 
 fi

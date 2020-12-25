@@ -4,9 +4,11 @@
 
 /sbin/stop lab126_gui
 
+fbink -f -i /mnt/us/extensions/OkMonitor/info_monitor_close.png
+
 /mnt/us/extensions/OkMonitor/oktouch
 
-# Exited out of above by press bottom right
+# Exited out of above by press bottom left
 # Kill process
 killall nc
 

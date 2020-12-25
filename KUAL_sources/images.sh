@@ -1,7 +1,7 @@
 
 
 # wget https://svn.ak-team.com/svn/Configs/trunk/Kindle/Touch_Hacks/ScreenSavers/src/linkss/etc/kindle_colors.gif
-# https://fa2png.app/ tv-solid 100px
+# https://fa2png.app/ tv-solid window-close-solid 100px 
 
 convert tv-solid.png -background white \
 		-gravity center  -extent 1024x758 \
@@ -39,6 +39,12 @@ convert tv-solid.png -background white \
 		-gravity North -pointsize 48 -annotate +0+200 'Waiting to connect' \
 		-rotate 90 monitor24_wait.png 
 
+convert window-close-solid.png -background white \
+		-gravity NorthEast  -extent 1024x758 \
+		-gravity North -pointsize 48 -annotate +0+300 \
+		"When monitor starts\nrefresh screen by \ntouching anywhere in\nthis large area" \
+		-gravity NorthEast -pointsize 36 -annotate +0+100 \
+		"Close"  -rotate 270 monitor_close.png
 
 # To Kindle format
 for file in monitor*.png
