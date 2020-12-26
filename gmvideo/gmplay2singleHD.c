@@ -78,6 +78,10 @@ u32 MY = 0;     // yres (visible)
 u32 VY = 0;     // (VY>MY): mxcfb driver
 u8 ppb = 0;     // pixels per byte
 u32 fc = 0;     // frame counter
+u32 yoffset = 0;     // y offset
+u32 xoffset = 0;     // y offset
+
+
 
 //==================================
 // gmplay8 - play video on 8-bit fb0
@@ -93,7 +97,7 @@ void gmplay8(void) {
     for (y = 0; y < YVID; y +=2)
       for (x = 0; x < XVID; x += 16) {
 
-        i = y/2 * fs + x/2;        
+        i = (yoffset+y/2) * fs + (xoffset+x/2);        
 
         b = fbt[(XVID/2) / 8 * (y/2) + (x/2) / 8];
         fb0[i] = (b & 1) * 255;
@@ -205,7 +209,28 @@ int main(int argc, char *argv[]) {
   // Only one char ie. a numebr 0-9, very lazy 
   char *value  = argv[1];
   int sp = atoi(value);
-  printf("Command line: %d ", sp);
+  switch(sp)
+  {
+	  case 1:
+        yoffset =  512;
+        xoffset =  0;
+	    break;
+	  case 2:
+        yoffset =  0;
+        xoffset =  0;
+	    break;
+	  case 3:
+        yoffset =  512;
+        xoffset =  379;
+	    break;
+	  case 4:
+        yoffset =  0;
+        xoffset =  379;
+	    break;
+	  default:
+        yoffset =  512;
+        xoffset =  0;	    
+  }
   
   int i;
   gmlib(GMLIB_INIT);
