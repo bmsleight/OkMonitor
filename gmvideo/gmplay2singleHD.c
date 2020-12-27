@@ -95,11 +95,11 @@ void gmplay8(void) {
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
     for (y = 0; y < YVID; y +=2)
-      for (x = 0; x < XVID-17; x += 16) {
+      for (x = 0; x < XVID/2-8; x += 8) {
 
-        i = (yoffset+y/2) * fs + (xoffset+x/2);        
+        i = (yoffset+y/2) * fs + (xoffset+x);        
 
-        b = fbt[(XVID/2) / 8 * (y/2) + (x/2) / 8];
+        b = fbt[(XVID/2) / 8 * (y/2) + (x) / 8];
         fb0[i] = (b & 1) * 255;
         
         b >>= 1;
@@ -221,11 +221,11 @@ int main(int argc, char *argv[]) {
 	    break;
 	  case 3:
         yoffset =  512;
-        xoffset =  379;
+        xoffset =  379-3;
 	    break;
 	  case 4:
         yoffset =  0;
-        xoffset =  379;
+        xoffset =  379-3;
 	    break;
 	  default:
         yoffset =  512;
