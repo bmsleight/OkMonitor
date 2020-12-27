@@ -6,6 +6,8 @@
 NUM_SCREENS="$1"
 SERVERIP="$2"
 SERVERPORT="$3"
+SCREENNUM="$4"
+
 
 # Shutdown GUI and allow exit by bottom right-hand
 /bin/ash /mnt/us/extensions/OkMonitor/oktouch-control.sh & 
@@ -17,7 +19,7 @@ then
 	nc $SERVERIP $SERVERPORT | /mnt/us/extensions/OkMonitor/gmplay 
 else
 	lipc-set-prop com.lab126.powerd preventScreenSaver 1
-	nc $SERVERIP $SERVERPORT | /mnt/us/extensions/OkMonitor/gmplay2single
+	nc $SERVERIP $SERVERPORT | /mnt/us/extensions/OkMonitor/gmplay2singleHD $SCREENNUM
 
 fi
 

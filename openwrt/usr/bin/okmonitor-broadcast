@@ -62,6 +62,14 @@ else
 fi
 
 sleep 5
+
+
+# Screen size kindle viable is 1024x758 (1/4 is 512x379. 
+# Output of HDMI capture is requested to be 1024x768 (1/4 id 512x384)
+#   crop=512:384:512:384,scale=512:379
+# 	for single screen - we tweak to 381 (as the rounding is weird) 
+#   for multiple screen the middle seam does not matter as much
+
 if [ "$NUM_SCREENS" -eq "4" ]
 then
     ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
@@ -71,9 +79,9 @@ then
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379" /tmp/screen4.pipe
 else
     ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
-	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:0:0,scale=512:379,transpose=2,transpose=2" /tmp/screen1.pipe \
-	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:512:0,scale=512:379,transpose=2,transpose=2" /tmp/screen2.pipe \
-	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:0:379,scale=512:379,transpose=2,transpose=2" /tmp/screen3.pipe \
-	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379,transpose=2,transpose=2" /tmp/screen4.pipe
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:384:0:0,scale=512:379,transpose=2,transpose=2" /tmp/screen1.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:384:512:0,scale=512:379,transpose=2,transpose=2" /tmp/screen2.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:384:0:381,scale=512:379,transpose=2,transpose=2" /tmp/screen3.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:384:512:381,scale=512:379,transpose=2,transpose=2" /tmp/screen4.pipe
 
 fi
