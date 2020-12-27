@@ -95,7 +95,7 @@ void gmplay8(void) {
     // if (getmsec()>teu+1000) continue; // drop frame if > 1 sec behind
     gmlib(GMLIB_VSYNC); // wait for fb0 ready
     for (y = 0; y < YVID; y +=2)
-      for (x = 0; x < XVID; x += 16) {
+      for (x = 0; x < XVID-17; x += 16) {
 
         i = (yoffset+y/2) * fs + (xoffset+x/2);        
 

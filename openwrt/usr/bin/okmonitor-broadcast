@@ -30,16 +30,10 @@ mkfifo /tmp/screen2.pipe
 mkfifo /tmp/screen3.pipe
 mkfifo /tmp/screen4.pipe
 
-
-if [ "$NUM_SCREENS" -eq "4" ]
-then
-	cat /tmp/screen1.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5001 &
-	cat /tmp/screen2.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5002 &
-	cat /tmp/screen3.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5003 &
-	cat /tmp/screen4.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5004 &
-else
-	cat /tmp/screen1.pipe  | /usr/bin/raw2gmv2single | netcat -l -p  5001 &
-fi
+cat /tmp/screen1.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5001 &
+cat /tmp/screen2.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5002 &
+cat /tmp/screen3.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5003 &
+cat /tmp/screen4.pipe  | /usr/bin/raw2gmv  | netcat -l -p  5004 &
 
 
 if [ "$NUM_SCREENS" -eq "4" ]
@@ -58,19 +52,28 @@ then
 
 else
 	screen -dmS screen_1 -t screen_1 
-	screen -S screen_1 -p screen_1  -X stuff 'ssh -y '$IP_1' "/bin/ash /mnt/us/extensions/OkMonitor/minion.sh 1 '$NET_ADDR' 5001" \r'
+	screen -S screen_1 -p screen_1  -X stuff 'ssh -y '$IP_1' "/bin/ash /mnt/us/extensions/OkMonitor/minion.sh 1 '$NET_ADDR' 5001 1 " \r'
+	screen -dmS screen_2 -t screen_2 
+	screen -S screen_2 -p screen_2  -X stuff 'ssh -y '$IP_1' "/bin/ash /mnt/us/extensions/OkMonitor/minion.sh 1 '$NET_ADDR' 5002 2 " \r'
+	screen -dmS screen_3 -t screen_3 
+	screen -S screen_3 -p screen_3  -X stuff 'ssh -y '$IP_1' "/bin/ash /mnt/us/extensions/OkMonitor/minion.sh 1 '$NET_ADDR' 5003 3 " \r'
+	screen -dmS screen_4 -t screen_4 
+	screen -S screen_4 -p screen_4  -X stuff 'ssh -y '$IP_1' "/bin/ash /mnt/us/extensions/OkMonitor/minion.sh 1 '$NET_ADDR' 5004 4 " \r'
 fi
 
 sleep 5
-
 if [ "$NUM_SCREENS" -eq "4" ]
 then
-	ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
+    ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:0:0,scale=512:379,transpose=2,transpose=2" /tmp/screen1.pipe \
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:0,scale=512:379" /tmp/screen2.pipe \
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:0:379,scale=512:379,transpose=2,transpose=2" /tmp/screen3.pipe \
 	-pix_fmt gray -r 6 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379" /tmp/screen4.pipe
 else
-	ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
-	-pix_fmt gray -r 3.3 -f rawvideo  -filter:v "scale=1024:758,transpose=2,transpose=2" /tmp/screen1.pipe 
+    ffmpeg -re -f v4l2 -input_format yuyv422  -y -video_size 1024x768  -i /dev/video0  \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:0:0,scale=512:379,transpose=2,transpose=2" /tmp/screen1.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:512:0,scale=512:379,transpose=2,transpose=2" /tmp/screen2.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:0:379,scale=512:379,transpose=2,transpose=2" /tmp/screen3.pipe \
+	-pix_fmt gray -r 5 -f rawvideo  -filter:v "crop=512:379:512:379,scale=512:379,transpose=2,transpose=2" /tmp/screen4.pipe
+
 fi
