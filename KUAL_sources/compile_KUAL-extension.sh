@@ -21,11 +21,12 @@ function cptestk {
 
 scp oktouch.c pi@picompile.lan:/home/pi/
 scp ../gmvideo/gmplay*  pi@picompile.lan:/home/pi/
-ssh pi@picompile.lan 'gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay2single.c -o gmplay2single'
+#ssh pi@picompile.lan 'gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay2single.c -o gmplay2single'
+ssh pi@picompile.lan 'gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay2singleHD.c -o gmplay2singleHD'
 ssh pi@picompile.lan 'gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 gmplay.c -o gmplay'
 ssh pi@picompile.lan 'gcc -Wl,--dynamic-linker -Wl,/lib/ld-linux.so.3 oktouch.c -o oktouch'
 
-scp pi@picompile.lan:/home/pi/gmplay2single ./
+scp pi@picompile.lan:/home/pi/gmplay2singleHD ./
 scp pi@picompile.lan:/home/pi/gmplay ./
 scp pi@picompile.lan:/home/pi/oktouch ./
 

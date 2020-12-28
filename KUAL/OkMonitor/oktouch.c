@@ -1,7 +1,9 @@
 /* Name: main.c
  * Author: JoppyFurr
  * Description: My first play with Kindle code.
- * Update by Brendan Sleight - 
+ * MIT License - "Yes, it is fine to use this under an MIT / BSD license"
+ *    Email of the 2020-12-25
+ * Update by Brendan Sleight 
  */
 
 // https://www.mobileread.com/forums/showthread.php?t=178513

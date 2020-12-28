@@ -31,7 +31,6 @@ cp -r /tmp/OkMonitor-main/openwrt/*  /
 cd /tmp/OkMonitor-main/gmvideo/
 gcc /tmp/OkMonitor-main/gmvideo/raw2gmv.c -o /usr/bin/raw2gmv
 gcc /tmp/OkMonitor-main/gmvideo/raw2gmv2single.c -o /usr/bin/raw2gmv2single
-/etc/init.d/okmonitor-listen-commands enable
 ```
 
 
